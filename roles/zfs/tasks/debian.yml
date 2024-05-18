@@ -31,7 +31,7 @@
 - name: debian | install zfs
   apt: 
     name:
-      - linux-headers-{{ ansible_kernel }}
+      - "{{ debian_headers_package }}"
       - zfsutils-linux
       - zfs-dkms
     state: present

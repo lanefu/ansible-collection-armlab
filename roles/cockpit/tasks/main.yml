@@ -1,0 +1,64 @@
+---
+# tasks file for cockpit
+#
+- name: install cockpit base package
+  apt:
+    name: "{{ cockpit_packages_base }}"
+    state: present
+
+  tags:
+    - cockpit
+
+- name: install cockpit base storage stuff
+  apt:
+    name: "{{ cockpit_packages_storage_base }}"
+    state: present
+  tags:
+    - cockpit
+    - cockpit_storage
+
+- name: install cockpit virt packages 
+  apt:
+    name: "{{ cockpit_packages_virt + cockpit_packages_virt_architecture[ansible_architecture] }}"
+
+- name: install 45drives keyring
+  get_url:
+    url: https://repo.45drives.com/key/gpg.asc
+    dest: /etc/apt/keyrings/45drives.asc
+    checksum: sha256:47d8f87e63048e90dd0565405d5d1378bb2fbf4abe5def2933f7d12c75931939
+  when: cockpit_enable_45drives
+  tags:
+    - cockpit
+    - 45drives
+
+## commit crimes -- have to force amd64 arch, but their packages are actually _all_ format
+- name: install 45drives repo
+  apt_repository:
+    repo: deb [arch=amd64 signed-by=/etc/apt/keyrings/45drives.asc] https://repo.45drives.com/debian focal main
+    filename: 45drives
+    state: present
+  when: cockpit_enable_45drives
+  changed_when: True
+  notify:
+    - 45drives disclaimer
+  tags:
+    - cockpit
+    - 45drives
+
+- name: install 45drives packages 
+  apt:
+    name: "{{ cockpit_packages_storage_45drives }}"
+  when: cockpit_enable_45drives
+  tags:
+    - cockpit
+    - 45drives
+
+- name: cockpit crimes - enable root login
+  lineinfile:
+    path: /etc/cockpit/disallowed-users
+    line: root
+    state: absent
+  notify: restart cockpit
+  when: cockpit_crimes
+
+

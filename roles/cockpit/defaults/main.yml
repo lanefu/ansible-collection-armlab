@@ -1,0 +1,54 @@
+---
+# defaults file for cockpit
+#
+
+cockpit_crimes: yes
+
+cockpit_enable_45drives: yes
+
+cockpit_packages_base:
+  - cockpit
+  - cockpit-pcp
+  - cockpit-packagekit
+  - cockpit-system
+
+cockpit_packages_storage_base:
+  - lvm2
+  - mdadm
+  - xfsprogs
+  - acl
+  - udisks2-btrfs
+  - udisks2-lvm2
+  - cockpit
+  - cockpit-podman
+  - cockpit-sosreport
+  - cockpit-storaged
+  - cockpit-pcp
+  - nfs-kernel-server
+  - attr
+  - samba
+  - winbind
+
+cockpit_packages_storage_45drives:
+  - cockpit-file-sharing
+  - cockpit-identities
+  - cockpit-navigator
+  - cockpit-benchmark
+
+cockpit_packages_virt:
+  - qemu-utils
+  - virtiofsd
+  - dnsmasq
+  - virtinst
+  - cockpit-machines
+  - cockpit-networkmanager
+  - ipxe-qemu
+
+cockpit_packages_virt_architecture:
+  aarch64:
+    - qemu-system-arm
+    - qemu-efi-aarch64
+    - qemu-efi-arm
+  amd64:
+    - qemu-kvm
+    - qemu-efi

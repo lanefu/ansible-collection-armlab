@@ -1,0 +1,11 @@
+---
+# handlers file for cockpit
+#
+- name: restart cockpit
+  service:
+    name: cockpit
+    state: restarted
+
+- name: 45drives disclaimer
+  debug:
+    msg: "45 drives repo is meant for amd64.. some things work with ARM because they're scripts.  zfs needs ADM64"

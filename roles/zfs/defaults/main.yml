@@ -11,6 +11,9 @@ zfs_create_pools: false
 # debian_release:
 debian_use_backports: True
 
+# kernel header packages to install to build dkms modules 
+debian_headers_package: linux-headers-{{ ansible_kernel }}
+
 # Defines Ubuntu Repo
 ubuntu_apt_repository: http://us.archive.ubuntu.com/ubuntu
 
