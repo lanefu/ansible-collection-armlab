@@ -1,0 +1,16 @@
+---
+# tasks file for destroy-kvm-guest
+
+- name: "destroy vm {{ destroy_item }}"
+  community.libvirt.virt:
+    name: "{{ destroy_item }}"
+    state: destroyed
+    force: true
+  tags:
+    - destroy
+    - kvm
+- name: "undefine and remove all storage {{ destroy_item }}"
+  command:  "virsh undefine --domain {{ destroy_item }} --remove-all-storage --nvram"
+  tags:
+    - destroy
+    - kvm
