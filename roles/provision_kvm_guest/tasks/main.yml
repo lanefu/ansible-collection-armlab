@@ -24,6 +24,8 @@
 # be sure to deply based on arch 
 - name: deploy vm 
   shell: "{{ lookup('template', 'import_uefi_cloudinit_vm.sh.j2') }}"
+  args:
+    creates: "/etc/libvirt/qemu/{{ armlab_provision_hostname }}.xml"
   tags:
     - deploy
 
