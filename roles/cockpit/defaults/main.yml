@@ -37,6 +37,7 @@ cockpit_packages_storage_45drives:
 
 cockpit_packages_virt:
   - qemu-utils
+  - cloud-image-utils
   - virtiofsd
   - dnsmasq
   - virtinst
