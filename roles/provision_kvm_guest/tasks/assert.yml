@@ -1,0 +1,8 @@
+---
+# check for configured vars
+#
+
+- assert:
+    that:
+      - armlab_provision_image_folder is defined
+

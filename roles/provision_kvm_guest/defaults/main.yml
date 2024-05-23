@@ -1,0 +1,17 @@
+---
+# defaults file for provision-kvm-guest
+armlab_provision_cloud_init: lanecloud
+armlab_provision_nocloud_base_url: "https://example.com/nocloud"
+armlab_provision_nocloud_url: "{{ armlab_provision_nocloud_base_url }}/{{ armlab_provision_cloud_init }}/"
+armlab_provision_hostname: CHANGEME
+armlab_provision_instance_id: "armlab-{{ armlab_provision_hostname }}"
+armlab_provision_image_folder: /mnt/zfs/crucial/images 
+armlab_provision_machines_base: /mnt/zfs/crucial/machines
+armlab_provision_machine_folder: "{{ armlab_provision_machines_base }}/{{ armlab_provision_hostname }}"
+armlab_provision_image_format: qcow2
+armlab_provision_image_file: "{{ armlab_provision_hostname}}.img.{{ armlab_provision_image_format }}"
+armlab_provision_image_size: 30G
+armlab_provision_smp: 2
+armlab_provision_memory: 2048
+#armlab_provision_base_image: debian-13-generic-arm64-daily.qcow2
+armlab_provision_base_image: Armbian-unofficial_24.05.23-armsurvivors-191_Uefi-arm64_bookworm_edge_6.8.10-metadata-cloud.img.qcow2

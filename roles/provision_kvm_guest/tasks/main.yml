@@ -1,0 +1,30 @@
+---
+# tasks file for provision-kvm-guest
+#
+
+- name: fetch base image
+  debug:
+    msg: "fetch base image if appropriate"
+
+- name: configure base image storage
+  import_tasks: prepare_vm_storage.yml
+  tags:
+    - storage
+    - prepare_storage
+
+- name: build cloud-init image 
+  import_tasks: build_cloud-init.yml
+  tags:
+    - cloud-init
+
+- name: check for vm existence 
+  debug:
+    msg: "check for existing config"
+
+# be sure to deply based on arch 
+- name: deploy vm 
+  shell: "{{ lookup('template', 'import_uefi_cloudinit_vm.sh.j2') }}"
+  tags:
+    - deploy
+
+
