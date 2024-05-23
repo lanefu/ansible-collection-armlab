@@ -44,6 +44,7 @@ cockpit_packages_virt:
   - cockpit-machines
   - cockpit-networkmanager
   - ipxe-qemu
+  - python3-lxml
 
 cockpit_packages_virt_architecture:
   aarch64:
