@@ -41,5 +41,6 @@ virt-install \
 	--os-variant debiantesting \
 	--import \
 	--autoconsole none \
+	--autostart \
 	--sysinfo system.serial="ds=nocloud-net;h=${VM_NAME};i=${INSTANCE_ID};s=${NOCLOUD_URL}" \
 	--check all=off
