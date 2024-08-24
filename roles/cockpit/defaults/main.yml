@@ -8,7 +8,6 @@ cockpit_enable_45drives: yes
 
 cockpit_packages_base:
   - cockpit
-  - cockpit-pcp
   - cockpit-packagekit
   - cockpit-system
 
@@ -23,7 +22,6 @@ cockpit_packages_storage_base:
   - cockpit-podman
   - cockpit-sosreport
   - cockpit-storaged
-  - cockpit-pcp
   - nfs-kernel-server
   - attr
   - samba
