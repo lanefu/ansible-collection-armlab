@@ -49,6 +49,5 @@ cockpit_packages_virt_architecture:
     - qemu-system-arm
     - qemu-efi-aarch64
     - qemu-efi-arm
-  amd64:
+  x86_64:
     - qemu-kvm
-    - qemu-efi
