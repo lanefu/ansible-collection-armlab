@@ -4,8 +4,9 @@ armlab_provision_cloud_init: lanecloud
 armlab_provision_nocloud_base_url: "https://example.com/nocloud"
 armlab_provision_nocloud_url: "{{ armlab_provision_nocloud_base_url }}/{{ armlab_provision_cloud_init }}/"
 armlab_provision_hostname: CHANGEME
+armlab_provision_mac_address: "{{ '52:58:00' | community.general.random_mac(seed=armlab_provision_hostname) }}"
 armlab_provision_instance_id: "armlab-{{ armlab_provision_hostname }}"
-armlab_provision_image_folder: /mnt/zfs/crucial/images 
+armlab_provision_image_folder: /mnt/zfs/crucial/images
 armlab_provision_machines_base: /mnt/zfs/crucial/machines
 armlab_provision_machine_folder: "{{ armlab_provision_machines_base }}/{{ armlab_provision_hostname }}"
 armlab_provision_image_format: qcow2

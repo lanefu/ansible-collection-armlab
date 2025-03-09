@@ -7,6 +7,7 @@ ARCH={{ ansible_architecture }}
 
 VM_NAME={{ armlab_provision_hostname }}
 VM_IMAGE={{ armlab_provision_image_file }}
+MAC_ADDRESS={{ armlab_provision_mac_address }}
 FINAL_VM_PATH="${MACHINE_DIR}/${VM_IMAGE}"
 
 VM_MEM={{ armlab_provision_memory }}
@@ -28,19 +29,19 @@ INSTANCE_ID={{ armlab_provision_instance_id }}
 # --cloud-init hooks
 
 virt-install \
-	--machine=virt \
-	--arch=${ARCH} \
-	--boot uefi,firmware.feature0.name=secure-boot,firmware.feature0.enabled=no \
-	--name=${VM_NAME} \
-	--virt-type=kvm \
-	--boot hd \
-	--network=default,model=virtio \
-	--disk path=${FINAL_VM_PATH},format=${IMAGE_FORMAT},device=disk,bus=virtio,cache=none \
-	--memory=${VM_MEM} \
-	--vcpu=${VM_CPU} \
-	--os-variant debiantesting \
-	--import \
-	--autoconsole none \
-	--autostart \
-	--sysinfo system.serial="ds=nocloud-net;h=${VM_NAME};i=${INSTANCE_ID};s=${NOCLOUD_URL}" \
-	--check all=off
+  --machine=virt \
+  --arch=${ARCH} \
+  --boot uefi,firmware.feature0.name=secure-boot,firmware.feature0.enabled=no \
+  --name=${VM_NAME} \
+  --virt-type=kvm \
+  --boot hd \
+  --network=default,model=virtio,mac=${MAC_ADDRESS} \
+  --disk path=${FINAL_VM_PATH},format=${IMAGE_FORMAT},device=disk,bus=virtio,cache=none \
+  --memory=${VM_MEM} \
+  --vcpu=${VM_CPU} \
+  --os-variant debiantesting \
+  --import \
+  --autoconsole none \
+  --autostart \
+  --sysinfo system.serial="ds=nocloud-net;h=${VM_NAME};i=${INSTANCE_ID};s=${NOCLOUD_URL}" \
+  --check all=off
