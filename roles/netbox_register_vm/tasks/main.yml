@@ -1,0 +1,10 @@
+---
+# roles/netbox_register_vm/tasks/main.yml
+
+- name: Include registration tasks when state is 'present'
+  ansible.builtin.include_tasks: register.yml
+  when: state == 'present'
+
+- name: Include unregistration tasks when state is 'absent'
+  ansible.builtin.include_tasks: unregister.yml
+  when: state == 'absent'

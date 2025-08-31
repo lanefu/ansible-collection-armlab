@@ -1,0 +1,34 @@
+---
+# roles/netbox_register_vm/defaults/main.yml
+
+# ## NetBox Connection Details
+# It's highly recommended to set these via inventory variables or group_vars
+# and use Ansible Vault for the token.
+netbox_url: "https://netbox.example.com"
+netbox_token: "YOUR_API_TOKEN_HERE" # <-- USE ANSIBLE VAULT FOR THIS
+
+# ## Role Behavior
+# state: 'present' to register the VM, 'absent' to unregister.
+state: "present"
+assign_primary_ip: true # Set to false to skip IP address assignment.
+
+# ## Virtual Machine Details (Nested Dictionary)
+vm:
+  name: "my-default-vm"
+  cluster: "Production-Cluster"
+  tenant: "Default-Tenant"
+  vcpus: 2
+  memory: 4096 # in MB
+  disk: 50 # in GB
+  site: "default-site"
+  interface_name: "eth0"
+  interface_mac: "" # Optional
+  tags:
+    - "ansible"
+    - "automated"
+
+# ## IPAM Details (Nested Dictionary)
+# Required only if assign_primary_ip is true
+ipam:
+  prefix: "192.168.1.0/24"
+  dns_domain: "example.local"
