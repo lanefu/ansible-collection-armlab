@@ -1,0 +1,10 @@
+---
+# roles/netbox_register_vm/tasks/unregister.yml
+
+- name: "Unregister (delete) Virtual Machine from NetBox"
+  netbox.netbox.netbox_virtual_machine:
+    netbox_url: "{{ netbox_url }}"
+    netbox_token: "{{ netbox_token }}"
+    data:
+      name: "{{ vm.name }}"
+    state: absent

@@ -1,0 +1,36 @@
+---
+# roles/netbox_register_vm/tasks/register.yml
+
+- name: "Register Virtual Machine in NetBox"
+  netbox.netbox.netbox_virtual_machine:
+    netbox_url: "{{ netbox_url }}"
+    netbox_token: "{{ netbox_token }}"
+    data:
+      name: "{{ vm.name }}"
+      cluster: "{{ vm.cluster }}"
+      tenant: "{{ vm.tenant }}"
+      site: "{{ vm.site }}"
+      vcpus: "{{ vm.vcpus }}"
+      memory: "{{ vm.memory }}"
+      disk: "{{ vm.disk }}"
+      tags: "{{ vm.tags | default(omit) }}"
+    state: present
+  register: new_vm_object
+
+- name: "Create network interface for {{ vm.name }}"
+  netbox.netbox.netbox_vm_interface:
+    netbox_url: "{{ netbox_url }}"
+    netbox_token: "{{ netbox_token }}"
+    data:
+      virtual_machine: "{{ new_vm_object.virtual_machine.id }}"
+      name: "{{ vm.interface_name }}"
+      mac_address: "{{ vm.interface_mac | default(omit) }}"
+    state: present
+  register: new_interface_object
+  when: new_vm_object.changed
+
+- name: "Include IPAM tasks to assign a primary IP"
+  ansible.builtin.include_tasks: ipam.yml
+  when:
+    - assign_primary_ip
+    # - new_vm_object.changed

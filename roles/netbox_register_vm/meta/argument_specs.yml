@@ -1,0 +1,90 @@
+---
+# roles/netbox_register_vm/meta/argument_specs.yml
+# This file defines the formal API for the role.
+# Ansible will validate any parameters passed to the role against this spec.
+argument_specs:
+  main:
+    short_description: The main entry point for the netbox_register_vm role.
+    options:
+      state:
+        description:
+          - "Determines whether to register or unregister the VM."
+        type: "str"
+        choices: ["present", "absent"]
+        default: "present"
+
+      assign_primary_ip:
+        description: "Set to false to skip IP address request and assignment."
+        type: "bool"
+        default: true
+
+      netbox_url:
+        description: "URL of the NetBox instance."
+        type: "str"
+        required: true
+
+      netbox_token:
+        description: "API token for authenticating with NetBox."
+        type: "str"
+        required: true
+        no_log: true # Prevents the token from being logged in console output
+
+      vm:
+        description: "A dictionary containing all virtual machine details."
+        type: "dict"
+        required: true
+        options:
+          name:
+            description: "The name of the virtual machine."
+            type: "str"
+            required: true
+          cluster:
+            description: "The name of the NetBox cluster."
+            type: "str"
+            required: true
+          tenant:
+            description: "The name of the NetBox tenant."
+            type: "str"
+            required: true
+          site:
+            description: "The NetBox site for the VM."
+            type: "str"
+            required: false
+          vcpus:
+            description: "The number of virtual CPUs."
+            type: "int"
+            default: 2
+          memory:
+            description: "The amount of memory in MB."
+            type: "int"
+            default: 4096
+          disk:
+            description: "The disk size in GB."
+            type: "int"
+            default: 50
+          interface_name:
+            description: "Name for the primary network interface."
+            type: "str"
+            default: "eth0"
+          interface_mac:
+            description: "Optional MAC address for the primary interface."
+            type: "str"
+          tags:
+            description: "A list of tags to apply to the VM in NetBox."
+            type: "list"
+            elements: "str"
+            default: ["ansible", "automated"]
+
+      ipam:
+        description: "A dictionary for IPAM details. Required if assign_primary_ip is true."
+        type: "dict"
+        required: "{{ assign_primary_ip }}" # Conditionally required
+        options:
+          prefix:
+            description: "The CIDR prefix to request an IP from (e.g., '192.168.1.0/24')."
+            type: "str"
+            required: true
+          dns_domain:
+            description: "The domain to append to the hostname for the DNS record."
+            type: "str"
+            required: true

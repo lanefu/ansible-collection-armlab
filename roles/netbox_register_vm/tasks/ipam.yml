@@ -1,0 +1,24 @@
+---
+# roles/netbox_register_vm/tasks/ipam.yml
+
+- name: "Assign the requested IP address to the VM interface"
+  netbox.netbox.netbox_ip_address:
+    netbox_url: "{{ netbox_url }}"
+    netbox_token: "{{ netbox_token }}"
+    data:
+      prefix: "{{ ipam.prefix }}"
+      dns_name: "{{ vm.name }}.{{ ipam.dns_domain }}"
+      # tenant: "{{ vm.tenant }}"  # FIXME: do i need this
+      assigned_object:
+        virtual_machine: "{{ vm.name }}" # FIXME: should this be a lookup
+    state: present
+  register: assigned_ip_object
+
+- name: "Set the primary IPv4 for {{ vm.name }}"
+  netbox.netbox.netbox_virtual_machine:
+    netbox_url: "{{ netbox_url }}"
+    netbox_token: "{{ netbox_token }}"
+    data:
+      name: "{{ vm.name }}"
+      primary_ip4: "{{ assigned_ip_object.ip_address.id }}"
+    state: present
