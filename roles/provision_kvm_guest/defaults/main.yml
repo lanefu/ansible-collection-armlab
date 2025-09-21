@@ -10,7 +10,7 @@ provision_kvm_guest_image_folder: /mnt/zfs/crucial/images
 provision_kvm_guest_machines_base: /mnt/zfs/crucial/machines
 provision_kvm_guest_machine_folder: "{{ provision_kvm_guest_machines_base }}/{{ provision_kvm_guest_hostname }}"
 provision_kvm_guest_image_format: qcow2
-provision_kvm_guest_image_file: "{{ provision_kvm_guest_hostname}}.img.{{ provision_kvm_guest_image_format }}"
+provision_kvm_guest_image_file: "{{ provision_kvm_guest_hostname }}.img.{{ provision_kvm_guest_image_format }}"
 provision_kvm_guest_image_size: 30G
 provision_kvm_guest_smp: 2
 provision_kvm_guest_memory: 2048
