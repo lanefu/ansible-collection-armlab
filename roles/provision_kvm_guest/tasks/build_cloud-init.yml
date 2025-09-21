@@ -3,7 +3,7 @@
 - name: render meta-data
   template:
     src: meta-data.j2
-    dest: "{{ armlab_provision_machine_folder }}/{{ armlab_provision_hostname }}-meta-data"
+    dest: "{{ provision_kvm_guest_machine_folder }}/{{ provision_kvm_guest_hostname }}-meta-data"
   tags:
     - cloud-init
     - meta-data
@@ -11,7 +11,7 @@
 - name: render user-data
   template:
     src: user-data.j2
-    dest: "{{ armlab_provision_machine_folder }}/{{ armlab_provision_hostname }}-user-data"
+    dest: "{{ provision_kvm_guest_machine_folder }}/{{ provision_kvm_guest_hostname }}-user-data"
   tags:
     - cloud-init
     - user-data
