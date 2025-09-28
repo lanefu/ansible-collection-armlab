@@ -15,6 +15,7 @@
       memory: "{{ vm.memory }}"
       disk: "{{ vm.disk }}"
       local_context_data: "{{ vm.local_context_data | default(omit) }}"
+      custom_fields: "{{ vm.custom_fields | default(omit) }}"
       tags: "{{ vm.tags | default(omit) }}"
     state: present
   register: new_vm_object
