@@ -1,10 +1,16 @@
 ---
 # defaults file for provision-kvm-guest
+
+# this is a legacy var for my nocloud stuff
 provision_kvm_guest_cloud_init: lanecloud
+
+provision_kvm_guest_generate_cloud_init_iso: false
+
 provision_kvm_guest_nocloud_base_url: "https://example.com/nocloud"
 provision_kvm_guest_nocloud_url: "{{ provision_kvm_guest_nocloud_base_url }}/{{ provision_kvm_guest_cloud_init }}/"
 provision_kvm_guest_hostname: CHANGEME
 provision_kvm_guest_mac_address: "{{ '52:58:00' | community.general.random_mac(seed=provision_kvm_guest_hostname) }}"
+provision_kvm_guest_network_bridge: "default"
 provision_kvm_guest_instance_id: "armlab-{{ provision_kvm_guest_hostname }}"
 provision_kvm_guest_image_folder: /mnt/zfs/crucial/images
 provision_kvm_guest_machines_base: /mnt/zfs/crucial/machines
@@ -16,3 +22,12 @@ provision_kvm_guest_smp: 2
 provision_kvm_guest_memory: 2048
 # provision_kvm_guest_base_image: debian-13-generic-arm64-daily.qcow2
 provision_kvm_guest_base_image: Armbian-unofficial_24.05.23-armsurvivors-191_Uefi-arm64_bookworm_edge_6.8.10-metadata-cloud.img.qcow2
+
+provision_kvm_guest_interface_name: "eth0"
+provision_kvm_guest_ip4_address: ""
+provision_kvm_guest_ip4_address_summarized: ""
+provision_kvm_guest_ip4_netmask: ""
+provision_kvm_guest_ip4_gateway: ""
+
+provision_kvm_guest_dns_server_1: 1.1.1.1
+provision_kvm_guest_dns_server_2: 8.8.8.8

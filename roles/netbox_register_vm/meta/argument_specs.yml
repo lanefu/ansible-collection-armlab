@@ -70,6 +70,10 @@ argument_specs:
             description: "configuration context"
             type: "dict"
             required: false
+          custom_fields:
+            description: "custom fields"
+            type: "dict"
+            required: false
           interface_name:
             description: "Name for the primary network interface."
             type: "str"
