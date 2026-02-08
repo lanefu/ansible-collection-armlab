@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 
 IMAGE_FORMAT={{ provision_kvm_guest_image_format }}
 IMAGE_DIR={{ provision_kvm_guest_image_folder }}
@@ -7,14 +8,16 @@ ARCH={{ ansible_architecture }}
 
 VM_NAME={{ provision_kvm_guest_hostname }}
 VM_IMAGE={{ provision_kvm_guest_image_file }}
-MAC_ADDRESS={{ provision_kvm_guest_mac_address }}
 FINAL_VM_PATH="${MACHINE_DIR}/${VM_IMAGE}"
 
 VM_MEM={{ provision_kvm_guest_memory }}
 VM_CPU={{ provision_kvm_guest_smp }}
+
+MAC_ADDRESS={{ provision_kvm_guest_mac_address }}
+VM_BRIDGE={{ provision_kvm_guest_network_bridge }}
+
 META_DATA_PATH="${MACHINE_DIR}/${VM_NAME}-meta-data"
 USER_DATA_PATH="${MACHINE_DIR}/${VM_NAME}-user-data"
-
 NOCLOUD_URL={{ provision_kvm_guest_nocloud_url }}
 INSTANCE_ID={{ provision_kvm_guest_instance_id }}
 
@@ -35,8 +38,8 @@ virt-install \
   --name=${VM_NAME} \
   --virt-type=kvm \
   --boot hd \
-  --network=default,model=virtio,mac=${MAC_ADDRESS} \
-  --disk path=${FINAL_VM_PATH},format=${IMAGE_FORMAT},device=disk,bus=virtio,cache=none \
+  --network=bridge=${VM_BRIDGE},model=virtio,mac=${MAC_ADDRESS} \
+  --disk path=${FINAL_VM_PATH},format=${IMAGE_FORMAT},device=disk,bus=virtio,cache=default \
   --memory=${VM_MEM} \
   --vcpu=${VM_CPU} \
   --os-variant debiantesting \
