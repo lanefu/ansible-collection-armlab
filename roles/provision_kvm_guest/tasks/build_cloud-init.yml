@@ -15,6 +15,17 @@
     - cloud-init
     - user-data
 
+- name: render custom network-config
+  copy:
+    content: "{{ provision_kvm_guest_cloud_init_network_config }}"
+    dest: "{{ provision_kvm_guest_machine_folder }}/network-config"
+  tags:
+    - cloud-init
+    - network-config
+  when:
+    - provision_kvm_guest_cloud_init_network_config is defined
+    - provision_kvm_guest_cloud_init_network_config | length > 0
+
 - name: render network-config
   template:
     src: network-config.j2
@@ -22,3 +33,6 @@
   tags:
     - cloud-init
     - network-config
+  when:
+    - provision_kvm_guest_ip4_address_summarized | default("") | length > 0
+    - provision_kvm_guest_cloud_init_network_config | default('') | length == 0

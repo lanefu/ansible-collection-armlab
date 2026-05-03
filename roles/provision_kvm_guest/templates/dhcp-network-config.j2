@@ -1,0 +1,8 @@
+network:
+  version: 2
+  ethernets:
+    {{ provision_kvm_guest_interface_name | default("eth0") }}:
+      dhcp4: true
+      dhcp6: true
+      match:
+        macaddress: {{ provision_kvm_guest_mac_address }}

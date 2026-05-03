@@ -50,6 +50,9 @@ virt-install \
   --virt-type=kvm \
   --boot hd \
   --network=bridge=${VM_BRIDGE},model=virtio,mac=${MAC_ADDRESS} \
+  {% for nic in provision_kvm_guest_extra_nics %}
+  --network=bridge={{ nic.bridge }},model=virtio{% if nic.mac_address is defined %},mac={{ nic.mac_address }}{% endif %} \
+  {% endfor %}
   --disk path=${FINAL_VM_PATH},format=${IMAGE_FORMAT},device=disk,bus=virtio,cache=default \
   --memory=${VM_MEM} \
   --vcpu=${VM_CPU} \
